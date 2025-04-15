@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../src/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://papajohns.az/images/favicon.png" rel="shortcut icon" type="image/x-icon">
+    <title>Pizza Sifarişi: Çatdırılma Və Ya Al-Apar | Papa Johns Azərbaycan</title>
+    <style>
+        .swiper {
+            width: 100%;
+            height: 80vh;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            height: 100%;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container max-w-7xl mx-auto p-5">
+            <div class="flex justify-between py-5">
+                <a href="index.htm"><img src="https://www.papajohns.az/images/PJ-logo.png" alt="logo"></a>
+                <button id="menu-toggle" class="md:hidden text-3xl text-gray-700">
+                    &#9776;
+                  </button>
+            </div>
+            <div class="hidden md:flex">
+                <div id="categList" class="gap-5 uppercase font-bold  flex flex-wrap">
+                    <a class="text-black font-normal bg-lime-400 border-1 border-black rounded-3xl px-[20px] py-[5px] " onclick="addForm()">Elave Et</a>
+                </div>
+            </div>
+            
+            <div>
+                
+                  <div id="categList2" class="gap-5 uppercase font-bold hidden md:hidden px-4 pb-4  flex-col space-y-3 bg-white">
+                    <a class="text-white bg-green-800 rounded p-[5px] inline-block" onclick="addForm()">Elave Et</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="main">
+            <div class="swiper mySwiper mx-auto" id="hiddenDiv">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://www.papajohns.az/images/1260x560---Yango-Kichik-chiken-bbq-and-cheddar-rolls.png"
+                            alt="" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://www.papajohns.az/images/1260x560---Cola-orta-karnaval-4-pendir.png" alt="" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img class=""
+                            src="https://www.papajohns.az/images/1260x560---kichik-Hot--Spaysi---chiken-Ran%C3%A7.png"
+                            alt="" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://www.papajohns.az/images/1260x560---ulduz.png" alt="" />
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <div class="container max-w-7xl mx-auto p-5">
+                <div class="text-5xl font-extrabold mb-5">Yeni məhsullarımızı dadmısınız?</div>
+                <h2 class="font-extrabold text-3xl mb-3">Gözlənilən an gəldi!</h2>
+                <p class="text-xl mb-3 "> Xırtıldayan pendirli yeni pizzalar artıq satışdadır və hər kəsi ləzzətli seçimlərlə sevindirir.
+                    Yeni pizzalarımız artıq bütün restoranlarımızda mövcuddur. Sizi də yeni pizzalarımızı kəşf etməyə dəvət
+                    edirik.</p>
+            </div>
+    
+            <div id="cards" class="flex flex-wrap justify-center gap-3 items-center"></div>
+        </div>
+        <div class="bg-black w-full">
+            <div class="flex flex-col md:flex-row container max-w-7xl mx-auto py-10 px-5 justify-center items-center gap-5">
+                <div class="p-5">
+                    <h1 class="text-5xl text-white font-extrabold">Bizim tətbiqimizi yükləyin</h1>
+                    <p class="text-white text-2xl py-5">və sevimli pizzanızı çatdırılma və ya al-apar üçün sifariş edin.</p>
+                    <div class="flex flex-col md:flex-row gap-5">
+                        <img class="w-[200px]" src="https://papajohns.az/images/appstore-12.svg" alt="">
+                        <img class="w-[200px]" src="https://papajohns.az/images/googleplay-13.svg" alt="">
+                    </div>
+                </div>
+                <div class="hidden md:flex">
+                    <img src="https://papajohns.az/images/phones-AZ-az.webp" alt="">
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="w-full bg-[#558B71] flex justify-between p-10">
+            <h1 class="text-white text-3xl font-bold">Daha Yaxşı İnqrediyentlər. Daha Yaxşı Pizza.</h1>
+            <img class="h-[40px]" src="https://papajohns.az/images/Logo-white.png" alt="">
+        </div>
+    </footer>
+    <script src="./script.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            slidesPerView: "auto",
+            spaceBetween: 20,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
+</body>
+
+</html>
