@@ -6,28 +6,51 @@ const categList2 = document.getElementById('categList2');
 const cards = document.getElementById('cards');
 const hiddenDiv = document.getElementById('hiddenDiv');
 
+let cardData = [];
+let loading = false;
+
 async function PrintCategData() {
     categdata = await getCategories();
     categdata.forEach(element => {
         categList.innerHTML += `<div onclick="printCategProds('${element.slug}')"><a class="text-black">${element.slug}</a></div>`;
-    });
-    categdata.forEach(element => {
         categList2.innerHTML += `<div onclick="printCategProds('${element.slug}')"><a class="text-black">${element.slug}</a></div>`;
     });
 }
-let cardData=[]
-window.printCategProds = async (ctg) => {
-  localStorage.clear()
-    hiddenDiv.style.display = 'none';
-    if (ctg === "kampaniyalar") {
-      hiddenDiv.style.display = 'flex';
-  }
-    cardData = await getProductByCtg(ctg);
+
+function showSkeletons() {
     cards.innerHTML = "";
+    for (let i = 0; i < 10; i++) {
+        cards.innerHTML += `
+        <div class="flex flex-col m-8 rounded shadow-md w-60 sm:w-80 animate-pulse h-96">
+            <div class="h-48 rounded-t bg-gray-300"></div>
+            <div class="flex-1 px-4 py-8 space-y-4 sm:p-8 bg-gray-50">
+                <div class="w-full h-6 rounded bg-gray-300"></div>
+                <div class="w-full h-6 rounded bg-gray-300"></div>
+                <div class="w-3/4 h-6 rounded bg-gray-300"></div>
+            </div>
+        </div>`;
+    }
+}
+
+window.printCategProds = async (ctg) => {
+    localStorage.clear();
+    hiddenDiv.style.display = ctg === "kampaniyalar" ? 'flex' : 'none';
+
+    loading = true;
+    showSkeletons();
+
+    try {
+        cardData = await getProductByCtg(ctg);
+    } finally {
+        loading = false;
+    }
+
+    cards.innerHTML = "";
+
     cardData.forEach(element => {
         cards.innerHTML += `
         <div class="max-w-xs rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800">
-            <img src="${element.img}" alt="" class="object-cover object-center w-full rounded-t-md h-72 dark:bg-gray-500">
+            <img onerror="this.src='https://t3.ftcdn.net/jpg/04/62/93/66/360_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg'" src="${element.img}" alt="" class="object-cover object-center w-full rounded-t-md h-72 dark:bg-gray-500">
             <div class="flex flex-col justify-between p-6 space-y-8">
                 <div class="space-y-2">
                     <h2 class="text-3xl font-semibold tracking-wide">${element.title}</h2>
@@ -38,22 +61,18 @@ window.printCategProds = async (ctg) => {
             </div>
         </div>`;
     });
-  
 };
 
 window.handleDel = async (ctg, id) => {
-  await deleteProductById(ctg, id);
-  // localStorage.setItem('category', ctg);
-  Swal.fire("Silindi!", "Məhsul uğurla silindi.", "success");
-  printCategProds(ctg);
+    await deleteProductById(ctg, id);
+    Swal.fire("Silindi!", "Məhsul uğurla silindi.", "success");
+    printCategProds(ctg);
 };
 
 const toggleButton = document.getElementById("menu-toggle");
 toggleButton.addEventListener("click", () => {
     categList2.classList.toggle("hidden");
 });
-
-// PrintCategData();
 
 window.addForm = (product = {}) => {
     if (product.id) {
@@ -85,10 +104,10 @@ window.handlePost = () => {
         category: document.querySelector('[name="category"]').value
     };
 
-    postNewItem(newItem, newItem.category).then(()=>{
-      Swal.fire("Uğurluu!", "Məhsul əlavə olundu!", "success");
-        printCategProds(category);
-    })
+    postNewItem(newItem, newItem.category).then(() => {
+        Swal.fire("Uğurluu!", "Məhsul əlavə olundu!", "success");
+        printCategProds(newItem.category);
+    });
 };
 
 window.handleEdit = () => {
@@ -115,5 +134,6 @@ function staticRender() {
         printCategProds(category);
     }
 }
+
 staticRender();
-PrintCategData()
+PrintCategData();
